@@ -1,5 +1,5 @@
 node {
-
+    // working on shreyas server
     // 🔹 Define variables
     def APP_NAME = "salary-api"
     def REPORT_DIR = "trivy-reports"
