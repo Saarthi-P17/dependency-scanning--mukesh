@@ -1,6 +1,6 @@
 node {
-    // working on shreyas server
-    // 🔹 Define variables
+
+    // vars
     def APP_NAME = "salary-api"
     def REPORT_DIR = "trivy-reports"
     
@@ -120,6 +120,19 @@ node {
         )
         error "Pipeline failed: ${err}"
     } finally {
+        if (currentBuild.currentResult == 'SUCCESS') {
+            slackSend(
+                channel: '#ci-operation-notifications',
+                color: 'good',
+                message: """
+                //Build Successful
+
+                Job: ${env.JOB_NAME}
+                Build: #${env.BUILD_NUMBER}
+                URL: ${env.BUILD_URL}
+                """
+            )
+        }
         // Always archive artifacts
         archiveArtifacts artifacts: "${REPORT_DIR}/*", fingerprint: true
     }
